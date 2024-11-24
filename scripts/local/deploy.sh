@@ -5,6 +5,8 @@ cd "$(dirname $0)" || exit 1
 declare ssh_commands
 IFS=$'\r\n' GLOBIGNORE='*' command eval  'ssh_commands=($(cat ./ssh_commands.txt))'
 
+bench_ssh_command=$(cat bench_ssh_commands.txt)
+
 for cmd in "${ssh_commands[@]}"
 do
   echo "============= ${cmd} ============="
@@ -23,7 +25,7 @@ do
   echo
 
   echo "---------- run benchmarks ----------"
-  echo '!!!!! ADD BENCHES !!!!!'; exit 1
+  ${bench_ssh_command}  'bash -s' < ../remote/bench.sh
 
   echo "---------- dump logs ----------"
   ${cmd} 'bash -s' < ../remote/dump-mysql-slow-log.sh
