@@ -20,7 +20,10 @@ do
   echo
 
   echo "---------- run benchmarks ----------"
-  ${bench_ssh_command}  'bash -s' < ../remote/bench.sh
+#  ${bench_ssh_command}  'bash -s' < ../remote/bench.sh
+  echo "ブラウザで走らせろ!!!"
+  read -p "走らせた? (y/N): " yn
+  case "$yn" in [yY]*) ;; *) echo "デプロイ停止します." ; exit ;; esac
 
   echo "---------- dump logs ----------"
   ${cmd} 'bash -s' < ../remote/dump-mysql-slow-log.sh
